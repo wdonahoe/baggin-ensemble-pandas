@@ -38,11 +38,20 @@ def main(filename, n_estimators):
 	compared_ = DataFrame(index = range(0,len(df_.index)), columns = range(0,n_estimators + 1))
 	compared_ = compared_.fillna(0)
 	compared_.ix[:,n_estimators] = df_[class_val].values
-	#print(compared_)
+
 	for i, fitted_classifier in enumerate(fitted_classifiers):
 		compared_.ix[:,i] = predict_all(fitted_classifier,df_[attributes].values)
 
+	subsets = fitted.estimators_samples_
 	print(compared_)
+	
+	for i, subset in enumerate(subsets):
+		print("Decision stump " + str(i) + " subset: ")
+		subsets[i] = list(itertools.chain(*df_[attributes].values[subset]))
+		print(subsets[i])
+
+	#subsets = DataFrame(subsets,index=subsets[0,1:],columns=list([1,2,3]))
+	#print(subsets)
 
 
 if __name__ == "__main__":
